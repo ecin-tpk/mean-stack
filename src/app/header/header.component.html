@@ -1,0 +1,39 @@
+<nav class="docs-navbar-header">
+  <div class="container">
+    <a routerLink="/" mat-button color="white">MEAN Stack</a>
+    <div class="flex-spacer"></div>
+    <button
+      class="icon-button"
+      mat-button
+      (click)="openSignUpDialog('login')"
+      *ngIf="!userIsAuthenticated"
+    >
+      Login
+    </button>
+    <button
+      mat-flat-button
+      class="btn-primary"
+      routerLink="/signup"
+      (click)="openSignUpDialog('signUp')"
+      *ngIf="!userIsAuthenticated"
+    >
+      Sign up
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu" *ngIf="userIsAuthenticated">
+      {{ userName }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item routerLink="/settings" class="custom-font">Settings</a>
+      <button mat-menu-item (click)="onLogout()" class="custom-font">Logout</button>
+    </mat-menu>
+    <a
+      class="icon-button btn-primary"
+      mat-flat-button
+      routerLink="/create"
+      *ngIf="userIsAuthenticated"
+    >
+      <mat-icon>add</mat-icon>
+      New post
+    </a>
+  </div>
+</nav>

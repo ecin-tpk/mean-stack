@@ -1,0 +1,38 @@
+* {
+  font-family: "Inter", "Helvetica Neue", sans-serif !important;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+.link-text {
+  color: #2196f3;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-facebook {
+  flex: 1;
+  background: #4367b0;
+  color: #fff;
+  margin-right: 12px;
+}
+
+.btn-google {
+  flex: 1;
+  background: #4585f1;
+  color: #fff;
+  margin-left: 12px;
+}
+
+.external-login-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 24px;
+  margin-top: 24px;
+}
+
+mat-form-field {
+  width: 100%;
+}

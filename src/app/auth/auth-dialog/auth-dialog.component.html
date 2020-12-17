@@ -1,0 +1,103 @@
+<div class="auth-dialog-container">
+  <div *ngIf="!emailRegistration">
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <p>{{ subtitle }}</p>
+    <div class="external-login-container">
+      <button mat-flat-button class="btn-facebook" (click)="fbLogin()">
+        Facebook
+      </button>
+      <button mat-flat-button class="btn-google">Google</button>
+    </div>
+
+    <mat-divider style="margin-bottom: 20px"></mat-divider>
+    <div *ngIf="mode === 'signUp'">
+      <p>
+        Sign up with your
+        <span class="link-text" (click)="onRegisterEmail()">Email</span>
+      </p>
+      <p>
+        Have an account?
+        <span class="link-text" (click)="onLoginOption()">Login</span>
+      </p>
+    </div>
+    <div *ngIf="mode === 'login'">
+      <p>Login with your Email</p>
+      <form
+        (ngSubmit)="onEmailLogin(loginForm)"
+        *ngIf="!isLoading"
+        #loginForm="ngForm"
+      >
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            ngModel
+            required
+            email
+            type="email"
+            name="email"
+            #email="ngModel"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            ngModel
+            required
+            name="password"
+            type="password"
+            #password="ngModel"
+          />
+        </mat-form-field>
+        <button mat-flat-button color="accent" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="emailRegistration">
+    <h2 mat-dialog-title>Become a member</h2>
+    <form
+      (ngSubmit)="onSignUp(signupForm)"
+      *ngIf="!isLoading"
+      #signupForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Fullname</mat-label>
+        <input
+          matInput
+          ngModel
+          required
+          type="text"
+          name="name"
+          #name="ngModel"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          ngModel
+          required
+          email
+          type="email"
+          name="email"
+          #email="ngModel"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          ngModel
+          required
+          name="password"
+          type="password"
+          #password="ngModel"
+        />
+      </mat-form-field>
+      <button mat-flat-button class="btn-primary" color="accent" type="submit">
+        Sign up
+      </button>
+    </form>
+  </div>
+</div>
