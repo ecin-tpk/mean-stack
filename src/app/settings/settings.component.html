@@ -1,3 +1,127 @@
-<section class="mat-typography">
-  <h1>This header will be styled</h1>
-</section>
+<div class="d-flex">
+  <mat-nav-list>
+    <a
+      mat-list-item
+      routerLink="/settings/account"
+      routerLinkActive="small-nav-selected-option"
+    >
+      <mat-icon>person</mat-icon>
+      Account
+    </a>
+    <a
+      mat-list-item
+      routerLink="/settings/password"
+      routerLinkActive="small-nav-selected-option"
+    >
+      <mat-icon>lock</mat-icon>
+      Password
+    </a>
+  </mat-nav-list>
+
+  <div class="small-container">
+    <h2>{{ option | titlecase }}</h2>
+    <!-- Account form -->
+    <form
+      [formGroup]="accountForm"
+      (ngSubmit)="onUpdateAccount()"
+      *ngIf="option === 'account'"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Display name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="name"
+          formControlName="name"
+        />
+        <mat-error *ngIf="accountForm.get('name').invalid"
+          >Please enter post content
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          readonly
+          type="email"
+          name="email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="accountForm.get('email').invalid"
+          >Please enter post content
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-flat-button
+        class="btn-spinner btn-primary"
+        type="submit"
+        [disabled]="isLoading"
+        style="margin-top: 15px"
+      >
+        <mat-spinner
+          class="small-spinner"
+          diameter="20"
+          *ngIf="isLoading"
+        ></mat-spinner>
+        <span *ngIf="!isLoading">Save changes</span>
+      </button>
+    </form>
+
+    <!-- Password form -->
+    <form
+      (ngSubmit)="onChangePassword(changePassForm)"
+      *ngIf="option === 'password'"
+      #changePassForm="ngForm"
+    >
+      <mat-form-field appearance="outline">
+        <mat-label>Current password</mat-label>
+        <input
+          matInput
+          ngModel
+          required
+          type="password"
+          name="currentPassword"
+          #currentPassword="ngModel"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>New password</mat-label>
+        <input
+          matInput
+          ngModel
+          required
+          type="password"
+          name="newPassword"
+          #newPassword="ngModel"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Re-type new password</mat-label>
+        <input
+          matInput
+          ngModel
+          required
+          type="password"
+          name="confirmPassword"
+          #confirmPassword="ngModel"
+        />
+      </mat-form-field>
+      <button
+        mat-flat-button
+        class="btn-spinner btn-primary"
+        color="accent"
+        type="submit"
+        [disabled]="isLoading"
+        style="margin-top: 15px"
+      >
+        <mat-spinner
+          class="small-spinner"
+          diameter="20"
+          *ngIf="isLoading"
+        ></mat-spinner>
+        <span *ngIf="!isLoading">Save changes</span>
+      </button>
+    </form>
+  </div>
+</div>

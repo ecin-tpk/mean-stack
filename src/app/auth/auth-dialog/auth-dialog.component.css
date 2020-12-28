@@ -1,9 +1,10 @@
-* {
-  font-family: "Inter", "Helvetica Neue", sans-serif !important;
-}
+/** {*/
+/*  font-family: "Inter", "Helvetica Neue", sans-serif !important;*/
+/*}*/
 
 h2 {
   font-weight: bold;
+  font-family: "Inter", "Helvetica Neue", sans-serif !important;
 }
 
 .link-text {
@@ -12,18 +13,52 @@ h2 {
   cursor: pointer;
 }
 
-.btn-facebook {
+.btn-facebook,
+.btn-google {
   flex: 1;
-  background: #4367b0;
   color: #fff;
-  margin-right: 12px;
+}
+
+.btn-facebook {
+  background: #4367b0;
+  margin-right: 7px;
+}
+
+.btn-facebook[disabled]{
+  background-color: #4367b0;
+  color: #ffffff;
+}
+
+.btn-google[disabled]{
+  background-color: #4585f1;
+  color: #ffffff;
 }
 
 .btn-google {
-  flex: 1;
   background: #4585f1;
-  color: #fff;
-  margin-left: 12px;
+  margin-left: 7px;
+}
+
+.inline-icon {
+  position: absolute;
+  height: 21px;
+  width: 21px;
+  left: 8px;
+  top: 8px;
+}
+
+#facebook {
+  background-image: url(../../../assets/img/facebook.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#google {
+  background-image: url(../../../assets/img/google.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .external-login-container {
@@ -35,4 +70,28 @@ h2 {
 
 mat-form-field {
   width: 100%;
+}
+
+:host ::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #fff;
+}
+
+mat-spinner {
+  width: 20px;
+}
+
+.btn-spinner {
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-spinner span {
+  height: 37px;
+}
+
+.btn-primary[disabled] {
+  background-color: #ec6359 !important;
 }

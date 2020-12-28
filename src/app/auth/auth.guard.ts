@@ -8,12 +8,18 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -25,7 +31,16 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     const isAuth = this.authService.getIsAuth();
     if (!isAuth) {
-      this.router.navigate(['/login']);
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.data = {
+        mode: 'login',
+      };
+      dialogConfig.width = '500px';
+      dialogConfig.autoFocus = false;
+
+      this.router.navigate(['/']);
+      this.dialog.open(AuthDialogComponent, dialogConfig);
     }
     return true;
   }

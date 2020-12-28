@@ -1,0 +1,63 @@
+*:not(mat-icon) {
+  font-family: "Inter", "Helvetica Neue", sans-serif !important;
+}
+
+.small-container {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-nav-list {
+  width: 200px;
+  margin-right: 50px;
+}
+
+mat-nav-list a {
+  font-size: 14px;
+}
+
+a[mat-list-item] mat-icon {
+  margin-right: 15px;
+}
+
+.small-nav-selected-option {
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 700;
+}
+
+mat-form-field input {
+  line-height: 1;
+}
+
+:host ::ng-deep .mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #fff;
+}
+
+mat-spinner {
+  width: 20px;
+}
+
+.btn-spinner {
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-spinner span {
+  height: 37px;
+}
+
+.btn-primary[disabled] {
+  background-color: #ec6359 !important;
+}

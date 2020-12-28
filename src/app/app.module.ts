@@ -10,52 +10,64 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig, GoogleLoginProvider,
+} from 'angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
+import { PostsModule } from './posts/posts.module';
+import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { HeaderComponent } from './header/header.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
-import { AuthDialogComponent } from './auth/auth-dialog/auth-dialog.component';
-import { appInitializer } from './app.initializer';
+import { ErrorInterceptor } from './error-interceptor';
 import { SettingsComponent } from './settings/settings.component';
+import { appInitializer } from './app.initializer';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PostCreateComponent,
-    HeaderComponent,
-    PostListComponent,
-    AuthDialogComponent,
-    SettingsComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, SettingsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
+    HttpClientModule,
+    AuthModule,
+    PostsModule,
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    HttpClientModule,
     MatIconModule,
-    MatProgressSpinnerModule,
-    MatPaginatorModule,
-    MatDialogModule,
-    MatDividerModule,
     MatMenuModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    SocialLoginModule,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('708036917474-d5f2fhf4sivucuv3ih1g1im3ndde3l7a.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig
+    },
   ],
   bootstrap: [AppComponent],
 })

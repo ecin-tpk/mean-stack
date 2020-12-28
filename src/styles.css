@@ -13,9 +13,52 @@ body {
 .container {
   max-width: 60%;
   margin: 0 auto;
+  padding: 8px;
+}
+
+@media (max-width: 720px) {
+  .container {
+    max-width: 100%;
+  }
 }
 
 .btn-primary {
   background-color: #f44336 !important;
   color: #fff !important;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.snackbar-success {
+  display: flex;
+  align-items: center;
+  background-color: #00c853;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.snackbar-error {
+  display: flex;
+  align-items: center;
+  background-color: #d50000;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.mat-snack-bar-container {
+  box-shadow: none !important;
 }

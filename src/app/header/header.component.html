@@ -19,13 +19,23 @@
     >
       Sign up
     </button>
-    <button mat-button [matMenuTriggerFor]="menu" *ngIf="userIsAuthenticated">
-      {{ userName }}
-    </button>
-    <mat-menu #menu="matMenu">
-      <a mat-menu-item routerLink="/settings" class="custom-font">Settings</a>
-      <button mat-menu-item (click)="onLogout()" class="custom-font">Logout</button>
-    </mat-menu>
+
+    <div
+      class="d-flex align-items-center"
+      [matMenuTriggerFor]="menu"
+      *ngIf="userIsAuthenticated"
+    >
+      <button mat-button>
+        {{ userName }}
+      </button>
+      <div mat-card-avatar class="mat-header-avatar"></div>
+      <mat-menu #menu="matMenu">
+        <a mat-menu-item routerLink="/settings/account" class="custom-font">Settings</a>
+        <button mat-menu-item (click)="onLogout()" class="custom-font">
+          Logout
+        </button>
+      </mat-menu>
+    </div>
     <a
       class="icon-button btn-primary"
       mat-flat-button
@@ -33,7 +43,7 @@
       *ngIf="userIsAuthenticated"
     >
       <mat-icon>add</mat-icon>
-      New post
+      Upload
     </a>
   </div>
 </nav>

@@ -1,6 +1,7 @@
-const http = require("http");
 const app = require("./backend/app");
+const http = require("http");
 const debug = require("debug")("mean-stack");
+const config = require("./backend/config/config");
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
@@ -16,7 +17,7 @@ const normalizePort = (val) => {
   return false;
 };
 
-const port = normalizePort(process.env.PORT || "3000");
+const port = normalizePort(process.env.PORT || config.port);
 app.set("port", port);
 
 const onError = (error) => {
@@ -40,7 +41,7 @@ const onError = (error) => {
 
 const onListening = () => {
   const addr = server.address();
-  const bind = typeof port === "string" ? "pipe" + port : "port" + port;
+  const bind = typeof addr === "string" ? "pipe" + addr : "port" + port;
   debug("Listening on " + bind);
 };
 

@@ -4,18 +4,16 @@ const app = express();
 const mongoose = require("mongoose");
 const postsRoutes = require("./routes/posts");
 const userRoutes = require("./routes/user");
+const config = require("./config/config");
 const path = require("path");
 
 // Connect to MongoDB Atlas
 mongoose
-  .connect(
-    "mongodb+srv://read-and-write:lQ0QxeXIznr3idqj@cluster0.acqq9.mongodb.net/mean-stack?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    }
-  )
+  .connect(config.mongo_db_connection_uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => {
     console.log("Connected to database");
   })

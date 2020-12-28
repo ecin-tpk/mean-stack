@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
-import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+
+import { AuthService } from '../auth/auth.service';
 import { AuthDialogComponent } from '../auth/auth-dialog/auth-dialog.component';
 
 @Component({
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private authListenerSub: Subscription;
   private userNameListenerSub: Subscription;
 
-  constructor(private authService: AuthService, public dialog: MatDialog) {}
+  constructor(private authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -46,12 +47,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogConfig.autoFocus = false;
 
     this.dialog.open(AuthDialogComponent, dialogConfig);
-
-    // const dialogRef = this.dialog.open(AuthDialogComponent, dialogConfig);
-    //
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
   }
 
   ngOnDestroy() {

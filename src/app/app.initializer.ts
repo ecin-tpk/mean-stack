@@ -1,3 +1,5 @@
+import {environment} from '../environments/environment';
+
 declare const FB: any;
 
 export function appInitializer() {
@@ -6,7 +8,7 @@ export function appInitializer() {
       // Wait for facebook sdk to initialize before starting the angular app
       window['fbAsyncInit'] = () => {
         FB.init({
-          appId: '1768528436659010',
+          appId: environment.facebookAppId,
           cookie: true,
           xfbml: true,
           version: 'v8.0',

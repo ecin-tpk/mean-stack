@@ -2,13 +2,27 @@
   <div *ngIf="!emailRegistration">
     <h2 mat-dialog-title>{{ title }}</h2>
     <p>{{ subtitle }}</p>
+    <!-- External authentication -->
     <div class="external-login-container">
-      <button mat-flat-button class="btn-facebook" (click)="fbLogin()">
+      <button
+        class="btn-facebook"
+        mat-flat-button
+        [disabled]="isLoading"
+        (click)="fbLogin()"
+      >
+        <div class="inline-icon" id="facebook"></div>
         Facebook
       </button>
-      <button mat-flat-button class="btn-google">Google</button>
+      <button
+        class="btn-google"
+        mat-flat-button
+        [disabled]="isLoading"
+        (click)="googleLogin()"
+      >
+        <div class="inline-icon" id="google"></div>
+        Google
+      </button>
     </div>
-
     <mat-divider style="margin-bottom: 20px"></mat-divider>
     <div *ngIf="mode === 'signUp'">
       <p>
@@ -17,16 +31,14 @@
       </p>
       <p>
         Have an account?
-        <span class="link-text" (click)="onLoginOption()">Login</span>
+        <span class="link-text" (click)="onLoginOption()"> Login </span>
       </p>
     </div>
+
+    <!-- Login form -->
     <div *ngIf="mode === 'login'">
       <p>Login with your Email</p>
-      <form
-        (ngSubmit)="onEmailLogin(loginForm)"
-        *ngIf="!isLoading"
-        #loginForm="ngForm"
-      >
+      <form (ngSubmit)="onEmailLogin(loginForm)" #loginForm="ngForm">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input
@@ -36,6 +48,7 @@
             email
             type="email"
             name="email"
+            [disabled]="isLoading"
             #email="ngModel"
           />
         </mat-form-field>
@@ -48,27 +61,40 @@
             name="password"
             type="password"
             #password="ngModel"
+            [disabled]="isLoading"
           />
         </mat-form-field>
-        <button mat-flat-button color="accent" type="submit">Login</button>
+        <button
+          mat-flat-button
+          class="btn-spinner btn-primary"
+          color="accent"
+          type="submit"
+          [disabled]="isLoading"
+        >
+          <mat-spinner
+            class="small-spinner"
+            diameter="20"
+            *ngIf="isLoading"
+          ></mat-spinner>
+          <span *ngIf="!isLoading">Login</span>
+        </button>
       </form>
     </div>
   </div>
+  <!-- Email registration -->
   <div *ngIf="emailRegistration">
     <h2 mat-dialog-title>Become a member</h2>
-    <form
-      (ngSubmit)="onSignUp(signupForm)"
-      *ngIf="!isLoading"
-      #signupForm="ngForm"
-    >
+    <!-- Sign up form -->
+    <form (ngSubmit)="onSignUp(signupForm)" #signupForm="ngForm">
       <mat-form-field appearance="outline">
-        <mat-label>Fullname</mat-label>
+        <mat-label>Full name</mat-label>
         <input
           matInput
           ngModel
           required
           type="text"
           name="name"
+          [disabled]="isLoading"
           #name="ngModel"
         />
       </mat-form-field>
@@ -81,6 +107,7 @@
           email
           type="email"
           name="email"
+          [disabled]="isLoading"
           #email="ngModel"
         />
       </mat-form-field>
@@ -92,11 +119,22 @@
           required
           name="password"
           type="password"
+          [disabled]="isLoading"
           #password="ngModel"
         />
       </mat-form-field>
-      <button mat-flat-button class="btn-primary" color="accent" type="submit">
-        Sign up
+      <button
+        mat-flat-button
+        class="btn-spinner btn-primary"
+        type="submit"
+        [disabled]="isLoading"
+      >
+        <mat-spinner
+          class="small-spinner"
+          diameter="20"
+          *ngIf="isLoading"
+        ></mat-spinner>
+        <span *ngIf="!isLoading">Sign up</span>
       </button>
     </form>
   </div>
