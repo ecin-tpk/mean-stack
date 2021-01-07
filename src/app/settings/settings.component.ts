@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { User } from '../_models/user.model';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-settings',
@@ -83,7 +83,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
     );
   }
 
-  onChangePassword(form: NgForm) {}
+  onChangePassword(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+    this.isLoading = true;
+    this.authService
+      .changePassword(form.value.password, form.value.newPassword)
+      .subscribe(
+        (res) => {
+          this.isLoading = false;
+          this.snackBar.open('Password changed successfully', null, {
+            duration: 3000,
+            panelClass: ['snackbar-success'],
+          });
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+  }
 
   ngOnDestroy() {
     this.loggedInUserSub.unsubscribe();

@@ -59,6 +59,6 @@ router.post("/auth/google", UserController.googleLogin);
 router.put("/update", checkAuth, UserController.updateUser);
 
 // PUT: Change password
-router.put("/change-password");
+router.put("/change-password", checkAuth, UserController.changePassword);
 
 module.exports = router;

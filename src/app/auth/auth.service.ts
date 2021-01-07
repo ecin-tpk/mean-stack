@@ -74,6 +74,7 @@ export class AuthService {
         userId: string;
         name: string;
         email: string;
+        type: string;
       }>(`${baseUrl}/login`, body)
       .pipe(
         tap((res) => {
@@ -89,6 +90,7 @@ export class AuthService {
               id: res.userId,
               name: res.name,
               email: res.email,
+              type: res.type,
             };
             this.loggedInUserListener.next(this.loggedInUser);
 
@@ -102,7 +104,8 @@ export class AuthService {
               expirationDate,
               res.userId,
               res.name,
-              res.email
+              res.email,
+              res.type
             );
           }
         })
@@ -139,6 +142,7 @@ export class AuthService {
         id: authInformation.userId,
         name: authInformation.userName,
         email: authInformation.userEmail,
+        type: authInformation.userType,
       };
       this.loggedInUserListener.next(this.loggedInUser);
     }
@@ -209,7 +213,7 @@ export class AuthService {
         userId: string;
         name: string;
         email: string;
-      }>(`${baseUrl}/auth/google`, {id, name, email, idToken})
+      }>(`${baseUrl}/auth/google`, { id, name, email, idToken })
       .pipe(
         tap((res) => {
           this.token = res.token;
@@ -257,9 +261,15 @@ export class AuthService {
     );
   }
 
+  changePassword(password: string, newPassword: string) {
+    const body = { password, newPassword };
+    return this.http.put(`${baseUrl}/change-password`, body);
+  }
+
   private setAuthTimer(duration: number) {
     this.tokenTimer = setTimeout(() => {
       this.logout();
+      this.router.navigate(['/'], { queryParams: { login: true } });
     }, duration * 1000);
   }
 
@@ -268,19 +278,24 @@ export class AuthService {
     expirationDate: Date,
     userId: string,
     userName: string,
-    email: string
+    email: string,
+    type?: string
   ) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
     localStorage.setItem('userName', userName);
     localStorage.setItem('userEmail', email);
+    localStorage.setItem('userType', type);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userType');
   }
 
   private getAuthData() {
@@ -289,6 +304,7 @@ export class AuthService {
     const userId = localStorage.getItem('userId');
     const userName = localStorage.getItem('userName');
     const userEmail = localStorage.getItem('userEmail');
+    const userType = localStorage.getItem('userType');
     if (!token || !expirationDate) {
       return;
     }
@@ -298,6 +314,7 @@ export class AuthService {
       userId,
       userName,
       userEmail,
+      userType,
     };
   }
 }

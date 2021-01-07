@@ -12,6 +12,7 @@
       mat-list-item
       routerLink="/settings/password"
       routerLinkActive="small-nav-selected-option"
+      *ngIf="loggedInUser?.type === 'email'"
     >
       <mat-icon>lock</mat-icon>
       Password
@@ -28,12 +29,7 @@
     >
       <mat-form-field appearance="outline">
         <mat-label>Display name</mat-label>
-        <input
-          matInput
-          type="text"
-          name="name"
-          formControlName="name"
-        />
+        <input matInput type="text" name="name" formControlName="name" />
         <mat-error *ngIf="accountForm.get('name').invalid"
           >Please enter post content
         </mat-error>
@@ -70,6 +66,7 @@
 
     <!-- Password form -->
     <form
+      [appMustMatch]="['newPassword', 'confirmPassword']"
       (ngSubmit)="onChangePassword(changePassForm)"
       *ngIf="option === 'password'"
       #changePassForm="ngForm"
@@ -81,8 +78,8 @@
           ngModel
           required
           type="password"
-          name="currentPassword"
-          #currentPassword="ngModel"
+          name="password"
+          #password="ngModel"
         />
       </mat-form-field>
       <mat-form-field appearance="outline">

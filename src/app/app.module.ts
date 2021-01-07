@@ -16,7 +16,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
   SocialLoginModule,
-  SocialAuthServiceConfig, GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  GoogleLoginProvider,
 } from 'angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,9 +29,15 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { SettingsComponent } from './settings/settings.component';
 import { appInitializer } from './app.initializer';
+import { MustMatchDirective } from './_helpers/must-match.directive';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SettingsComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    SettingsComponent,
+    MustMatchDirective,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -63,10 +70,12 @@ import { appInitializer } from './app.initializer';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('708036917474-d5f2fhf4sivucuv3ih1g1im3ndde3l7a.apps.googleusercontent.com'),
+            provider: new GoogleLoginProvider(
+              '708036917474-d5f2fhf4sivucuv3ih1g1im3ndde3l7a.apps.googleusercontent.com'
+            ),
           },
         ],
-      } as SocialAuthServiceConfig
+      } as SocialAuthServiceConfig,
     },
   ],
   bootstrap: [AppComponent],

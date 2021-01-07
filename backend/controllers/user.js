@@ -57,14 +57,15 @@ exports.emailLogin = (req, res) => {
           userId: fetchedUser._id,
         },
         config.jwt_secret,
-        { expiresIn: "1h" }
+        { expiresIn: "3m" }
       );
       res.status(200).json({
         token: token,
-        expiresIn: 3600,
+        expiresIn: 180,
         userId: fetchedUser._id,
         name: fetchedUser.name,
         email: fetchedUser.email,
+        type: "email",
       });
     })
     .catch(() => {
@@ -85,11 +86,11 @@ exports.facebookLogin = (req, res) => {
       userId: req["user"]._id,
     },
     config.jwt_secret,
-    { expiresIn: "1h" }
+    { expiresIn: "3m" }
   );
   res.status(200).json({
     token: token,
-    expiresIn: 3600,
+    expiresIn: 180,
     userId: req.user._id,
     name: req.user.name,
     email: req.user.email,
@@ -119,11 +120,11 @@ exports.googleLogin = (req, res) => {
             userId: userToReturn._id,
           },
           config.jwt_secret,
-          { expiresIn: "1h" }
+          { expiresIn: "3m" }
         );
         res.status(200).json({
           token: token,
-          expiresIn: 3600,
+          expiresIn: 180,
           userId: userToReturn._id,
           name: userToReturn.name,
           email: userToReturn.email,
@@ -138,11 +139,11 @@ exports.googleLogin = (req, res) => {
           userId: userToReturn._id,
         },
         config.jwt_secret,
-        { expiresIn: "1h" }
+        { expiresIn: "3m" }
       );
       res.status(200).json({
         token: token,
-        expiresIn: 3600,
+        expiresIn: 180,
         userId: userToReturn._id,
         name: userToReturn.name,
         email: userToReturn.email,
@@ -173,6 +174,52 @@ exports.updateUser = (req, res) => {
     .catch(() => {
       res.status(500).json({
         message: "Failed to update account",
+      });
+    });
+};
+
+// Change password
+exports.changePassword = (req, res) => {
+  // if(req.newPassword !== req.confirmPassword){
+  //   res.status(400).json({
+  //     message: "Password not match"
+  //   })
+  // }
+  console.log(req.body);
+
+  User.findOne({ _id: req.userData.userId })
+    .then((user) => {
+      return bcrypt.compare(req.body.password, user.password);
+    })
+    .then((result) => {
+      if (!result) {
+        return res.status(400).json({
+          message: "Wrong password",
+        });
+      }
+
+      bcrypt.hash(req.body.newPassword, 10).then((hash) => {
+        const user = new User({
+          _id: req.userData.userId,
+          password: hash,
+        });
+        User.updateOne({ _id: req.userData.userId }, user)
+          .then((result) => {
+            if (result.n > 0) {
+              res.status(200).json({
+                message: "Password changed successfully",
+              });
+            } else {
+              res.status(401).json({
+                message: "Not authorized",
+              });
+            }
+          })
+          .catch(() => {
+            res.status(500).json({
+              message: "Failed to change password",
+            });
+          });
       });
     });
 };
